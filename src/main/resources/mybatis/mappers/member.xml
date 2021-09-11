@@ -23,7 +23,7 @@
  		VALUES(#{id}, #{pwd}, #{name}, #{email}) 
  	</insert>
  	
- 	<select id="loginMember" parameterType="memberVO">
+ 	<select id="loginMember" parameterType="memberVO" resultType="MemberVO">
  		<![CDATA[
  			SELECT * FROM t_member
  			WHERE id=#{id} and pwd=#{pwd}

@@ -25,8 +25,8 @@ public class MemberService {
 			memberDAO.addMember(vo);
 		}
 		
-		public int login(MemberVO vo) {
-			int result = memberDAO.memberLogin(vo);
-			return result;
+		public MemberVO login(MemberVO vo) {
+			MemberVO member = memberDAO.memberLogin(vo);
+			return member;
 		}
 }

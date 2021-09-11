@@ -1,6 +1,7 @@
 package com.Project01.member.controller;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,8 @@ import com.Project01.member.vo.MemberVO;
 
 @Controller("memberController")
 public class MemberController {
+	private String accId = null;
+	private String sessionId = null;
 	
 	@Autowired
 	MemberService memberService;
@@ -28,23 +31,36 @@ public class MemberController {
 	
 	@PostMapping("/api/login")
 	@ResponseBody
-	public int login(@RequestBody MemberVO vo, HttpServletRequest request) {
-		memberVO = memberService.login(vo);
-		HttpSession session = request.getSession();
+	public int login(@RequestBody MemberVO vo) {
 		int result = 0;
-		result = memberService.login(vo);
-		
+		memberVO = memberService.login(vo);
+		if(memberVO != null) {
+			accId = memberVO.getId();
+			result = 1;
+		}else {
+			result = 0;
+		}
 		return result;
 	}
 	
-	@GetMapping("/member/membersList")
-	public ModelAndView listMembers() {
-		ModelAndView mav = new ModelAndView();
-		List members = memberService.selectMember();
-		mav.addObject("members", members);
-		mav.setViewName("memberList");
-		return mav;
+	@GetMapping("/api/getId")
+	@ResponseBody
+	public Map<String,String> getAuth() {
+		Map<String, String> info = new HashMap<String,String>();
+		info.put("accId",accId);
+		info.put("sessionId", sessionId);
+		return info;
 	}
+	
+	@GetMapping("/api/getSession")
+	@ResponseBody
+	public String getSession(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String sessionId = session.getId();
+		System.out.println(session);
+		return sessionId;
+	}
+	
 	
 	@PostMapping("/api/member/addMember")
 	public void addMember(@RequestBody MemberVO vo, HttpServletResponse response) {
@@ -57,5 +73,10 @@ public class MemberController {
 	public ModelAndView test() {
 		ModelAndView mav = new ModelAndView("redirect:/");
 		return mav;
+	}
+	
+	@GetMapping("/home")
+	public String main() {
+		return "index";
 	}
 }

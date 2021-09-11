@@ -23,9 +23,9 @@ public class MemberDAO {
 		int result = sqlSession.insert("mapper.member.insertMember",vo);
 	}
 	
-	public int memberLogin(MemberVO vo) {
+	public MemberVO memberLogin(MemberVO vo) {
 		MemberVO member = sqlSession.selectOne("mapper.member.loginMember",vo);
-		System.out.println(result);
-		return result;
+		System.out.println(member);
+		return member;
 	}
 }
