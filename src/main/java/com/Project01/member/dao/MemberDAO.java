@@ -25,7 +25,6 @@ public class MemberDAO {
 	
 	public MemberVO memberLogin(MemberVO vo) {
 		MemberVO member = sqlSession.selectOne("mapper.member.loginMember",vo);
-		System.out.println(member);
 		return member;
 	}
 }

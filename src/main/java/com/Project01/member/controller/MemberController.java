@@ -13,67 +13,63 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.Project01.member.service.MemberService;
 import com.Project01.member.vo.MemberVO;
 
 @Controller("memberController")
 public class MemberController {
-	private String accId = null;
-	private String sessionId = null;
+	
+	private String tempId = null;
+	private Map<String, String> memberId = new HashMap<String, String>();
 	
 	@Autowired
 	MemberService memberService;
 	
-	@Autowired
-	MemberVO memberVO;
+//	@Autowired
+//	MemberVO memberVO;
 	
 	@PostMapping("/api/login")
 	@ResponseBody
 	public int login(@RequestBody MemberVO vo) {
 		int result = 0;
-		memberVO = memberService.login(vo);
-		if(memberVO != null) {
-			accId = memberVO.getId();
+		MemberVO member = memberService.login(vo);
+		if(member != null) {
+			tempId = member.getId();
+			memberId.put(tempId, tempId);
+			System.out.println("size: " + memberId.size());
 			result = 1;
 		}else {
 			result = 0;
 		}
+		System.out.println(memberId.get(tempId));
 		return result;
 	}
 	
 	@GetMapping("/api/getId")
 	@ResponseBody
-	public Map<String,String> getAuth() {
-		Map<String, String> info = new HashMap<String,String>();
-		info.put("accId",accId);
-		info.put("sessionId", sessionId);
-		return info;
+	public String getId() {
+		String id = tempId;
+		tempId = null;
+		return id;
 	}
 	
-	@GetMapping("/api/getSession")
+	@PostMapping("/api/logout")
 	@ResponseBody
-	public String getSession(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String sessionId = session.getId();
-		System.out.println(session);
-		return sessionId;
+	public void logout(@RequestBody String id) {
+		int equal = id.lastIndexOf("=");
+		String memId = id.substring(0,equal); 
+		System.out.println(memId);
+		memberId.remove(memId);
+		System.out.println("--size: " + memberId.size());
 	}
-	
 	
 	@PostMapping("/api/member/addMember")
 	public void addMember(@RequestBody MemberVO vo, HttpServletResponse response) {
-		response.addHeader("Access-COntrol-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		memberService.addMember(vo);
-//		return "/";
 	}
 	
-	@GetMapping("/test")
-	public ModelAndView test() {
-		ModelAndView mav = new ModelAndView("redirect:/");
-		return mav;
-	}
 	
 	@GetMapping("/home")
 	public String main() {
