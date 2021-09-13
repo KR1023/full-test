@@ -1,11 +1,10 @@
 package com.Project01.member.controller;
 
+import java.awt.List;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,14 +13,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.Project01.Temp;
 import com.Project01.member.service.MemberService;
 import com.Project01.member.vo.MemberVO;
 
 @Controller("memberController")
 public class MemberController {
 	
+	Temp temp = Temp.getInstance();
+	
 	private String tempId = null;
 	private Map<String, String> memberId = new HashMap<String, String>();
+	
+	
 	
 	@Autowired
 	MemberService memberService;
@@ -36,6 +40,8 @@ public class MemberController {
 		MemberVO member = memberService.login(vo);
 		if(member != null) {
 			tempId = member.getId();
+			temp.setId(tempId);
+			System.out.println("temp에 ID 저장");
 			memberId.put(tempId, tempId);
 			System.out.println("size: " + memberId.size());
 			result = 1;
@@ -46,10 +52,26 @@ public class MemberController {
 		return result;
 	}
 	
+	@PostMapping("/api/setSession")
+	@ResponseBody
+	public void setSession(@RequestBody String sess) {
+		String key = sess.replace("%3A", ":").replace("=","");
+		System.out.println(key);
+		temp.setSession(key);
+		System.out.println("Key : " + key);
+		memberId.put(key,tempId);
+		
+		temp.addUser(memberId, key);
+		System.out.println("Key : " + key +", Value : " + tempId);
+		
+	}
+	
 	@GetMapping("/api/getId")
 	@ResponseBody
 	public String getId() {
 		String id = tempId;
+		String id2 = temp.getId();
+		System.out.println("temp로 ID 받기 : " + id2);
 		tempId = null;
 		return id;
 	}
