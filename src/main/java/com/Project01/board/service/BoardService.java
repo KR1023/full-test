@@ -28,4 +28,8 @@ public class BoardService {
 	public int getArticleNO() {
 		return boardDAO.getArticleNO();
 	}
+	
+	public ArticleVO viewArticle(int articleNO) {
+		return boardDAO.viewArticle(articleNO);
+	}
 }

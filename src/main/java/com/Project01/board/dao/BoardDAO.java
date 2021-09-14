@@ -33,4 +33,9 @@ public class BoardDAO {
 		int articleNO = sqlSession.selectOne("mapper.board.getArticleNO");
 		return articleNO;
 	}
+	
+	public ArticleVO viewArticle(int articleNO) {
+		ArticleVO article = sqlSession.selectOne("mapper.board.viewArticle",articleNO);
+		return article;
+	}
 }

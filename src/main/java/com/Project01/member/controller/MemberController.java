@@ -58,10 +58,12 @@ public class MemberController {
 		return result;
 	}
 	
+	// 세션값 설정.
+	// vue에서 생성된 세션 값을 수신하여 저장.
 	@PostMapping("/api/setSession")
 	@ResponseBody
 	public void setSession(@RequestBody String sess) {
-		String key = sess.replace("%3A", ":").replace("=","");
+		String key = changeKey(sess); 
 		System.out.println(key);
 		temp.setSession(key);
 		System.out.println("Key : " + key);
@@ -69,18 +71,20 @@ public class MemberController {
 		
 		temp.addUser(memberId, key);
 		System.out.println("Key : " + key +", Value : " + tempId);
+		System.out.println("로그인 유저 추가 : " + tempId);
 		
 	}
 	
-	@GetMapping("/api/getId")
-	@ResponseBody
-	public String getId() {
-		String id = tempId;
-		String id2 = temp.getId();
-		System.out.println("temp로 ID 받기 : " + id2);
-		tempId = null;
-		return id;
-	}
+//	@GetMapping("/api/getId")
+//	@ResponseBody
+//	public String getId() {
+//		String id = tempId;
+//		String id2 = temp.getId();
+//		System.out.println("temp로 ID 받기 : " + id2);
+//		tempId = null;
+//		return id;
+//	}
+	
 	
 	@PostMapping("/api/logout")
 	@ResponseBody
@@ -96,5 +100,11 @@ public class MemberController {
 	public void addMember(@RequestBody MemberVO vo, HttpServletResponse response) {
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		memberService.addMember(vo);
+	}
+	
+	private String changeKey(String session) {
+		String key = session.replace("%3A", ":").replace("=","");
+		System.out.println(key);
+		return key;
 	}
 }

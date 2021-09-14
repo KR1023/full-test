@@ -42,4 +42,10 @@
  			INSERT INTO t_board (articleNO, title, content,category, id) values(#{articleNO}, #{title}, #{content}, #{category}, #{id})
  		]]>
  	</insert>
+ 	
+ 	<select id="viewArticle" resultMap="articleResult" parameterType="int">
+ 		<![CDATA[
+ 			SELECT * FROM t_board where articleNO = #{articleNO}
+ 		]]>
+ 	</select>
  </mapper>

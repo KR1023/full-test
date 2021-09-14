@@ -8,6 +8,9 @@ public class Temp {
 	private static Temp instance = new Temp();
 	private String id;
 	private String session;
+	private String articleNO;
+	
+
 	private Map<String, String> users = new HashMap<String, String>();
 
 	private Temp() {}
@@ -38,6 +41,17 @@ public class Temp {
 
 	public void setSession(String session) {
 		this.session = session;
+	}
+	
+	public String getArticleNO() {
+		return articleNO;
+	}
+
+	public void initArticleNO() {
+		this.articleNO = null;
+	}
+	public void setArticleNO(String articleNO) {
+		this.articleNO = articleNO;
 	}
 	
 	public void initSession() {
