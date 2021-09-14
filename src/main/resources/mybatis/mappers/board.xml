@@ -11,6 +11,10 @@
  		<result property ="category" column="category" />
  		<result property="writeDate" column="writeDate" />
  	</resultMap>
+ 	<resultMap id="categoryResult" type="categoryVO">
+ 		<result property="name" column="name"/>
+ 		<result property="id"  column="id"/>
+ 	</resultMap>
  	
  	<select id="listArticles" resultMap="articleResult" parameterType="String" >
  		<![CDATA[
@@ -19,4 +23,23 @@
  			ORDER BY writeDate DESC;
  		]]>
  	</select>
+ 	
+ 	<select id="getCategory" resultMap="categoryResult" parameterType="String">
+ 		<![CDATA[
+ 			SELECT * FROM t_category
+ 			WHERE id=#{id}
+ 		]]>
+ 	</select>
+ 	
+ 	<select id="getArticleNO" resultType="int">
+ 		<![CDATA[
+ 			SELECT MAX(articleNO)+1 FROM t_board;
+ 		]]>
+ 	</select>
+ 	
+ 	<insert id="addArticle" parameterType="articleVO">
+ 		<![CDATA[
+ 			INSERT INTO t_board (articleNO, title, content,category, id) values(#{articleNO}, #{title}, #{content}, #{category}, #{id})
+ 		]]>
+ 	</insert>
  </mapper>

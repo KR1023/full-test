@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.Project01.board.vo.ArticleVO;
+import com.Project01.board.vo.CategoryVO;
 
 @Repository("boardDAO")
 public class BoardDAO {
@@ -17,5 +18,19 @@ public class BoardDAO {
 	public List listArticles(String id) {
 		List<ArticleVO> articles = sqlSession.selectList("mapper.board.listArticles",id);
 		return articles;
+	}
+	
+	public List<CategoryVO> getCategory(String id) {
+		List<CategoryVO> category = sqlSession.selectList("mapper.board.getCategory",id);
+		return category;
+	}
+	
+	public void addArticle(ArticleVO article) {
+		int result = sqlSession.insert("mapper.board.addArticle",article);
+	}
+	
+	public int getArticleNO() {
+		int articleNO = sqlSession.selectOne("mapper.board.getArticleNO");
+		return articleNO;
 	}
 }

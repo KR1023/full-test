@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Project01.board.dao.BoardDAO;
+import com.Project01.board.vo.ArticleVO;
 
 @Service("boardService")
 public class BoardService {
@@ -16,4 +17,15 @@ public class BoardService {
 		return boardDAO.listArticles(id);
 	}
 	
+	public List getCategory(String id) {
+		return boardDAO.getCategory(id);
+	}
+	
+	public void addArticle(ArticleVO article) {
+		boardDAO.addArticle(article);
+	}
+	
+	public int getArticleNO() {
+		return boardDAO.getArticleNO();
+	}
 }
