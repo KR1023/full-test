@@ -20,13 +20,13 @@
  	
  	<insert id="insertMember" parameterType="memberVO">
  		INSERT INTO t_member (id, pwd, name, email) 
- 		VALUES(#{id}, #{pwd}, #{name}, #{email}) 
+ 		VALUES(#{id}, sha2(#{pwd},256), #{name}, #{email}) 
  	</insert>
  	
  	<select id="loginMember" parameterType="memberVO" resultType="MemberVO">
  		<![CDATA[
  			SELECT * FROM t_member
- 			WHERE id=#{id} and pwd=#{pwd}
+ 			WHERE id=#{id} and pwd=sha2(#{pwd},256)
  		]]>
  	</select>
  	

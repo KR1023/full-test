@@ -43,6 +43,8 @@ public class MemberController {
 	@ResponseBody
 	public int login(@RequestBody MemberVO vo) {
 		int result = 0;
+		System.out.println("로그인 아이디  :" + vo.getId());
+		System.out.println("로그인 비밀번호 : " + vo.getPwd());
 		MemberVO member = memberService.login(vo);
 		if(member != null) {
 			tempId = member.getId();

@@ -38,4 +38,12 @@ public class BoardDAO {
 		ArticleVO article = sqlSession.selectOne("mapper.board.viewArticle",articleNO);
 		return article;
 	}
+	
+	public void modArticle(ArticleVO article) {
+		int result = sqlSession.update("mapper.board.modArticle",article);
+	}
+	
+	public void deleteArticle(int articleNO) {
+		int result = sqlSession.delete("mapper.board.deleteArticle",articleNO);
+	}
 }

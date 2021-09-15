@@ -16,6 +16,8 @@
  		<result property="id"  column="id"/>
  	</resultMap>
  	
+ 	
+ 	<!-- 글 목록 (전체 글 조회) -->
  	<select id="listArticles" resultMap="articleResult" parameterType="String" >
  		<![CDATA[
  			SELECT * FROM t_board 
@@ -24,6 +26,8 @@
  		]]>
  	</select>
  	
+ 	
+ 	<!-- ID가 가진 카테고리 -->
  	<select id="getCategory" resultMap="categoryResult" parameterType="String">
  		<![CDATA[
  			SELECT * FROM t_category
@@ -31,21 +35,38 @@
  		]]>
  	</select>
  	
+ 	<!-- 글 추가 시 지정할 글 번호 가져오기 -->
  	<select id="getArticleNO" resultType="int">
  		<![CDATA[
  			SELECT MAX(articleNO)+1 FROM t_board;
  		]]>
  	</select>
  	
+ 	<!-- 글 추가 -->
  	<insert id="addArticle" parameterType="articleVO">
  		<![CDATA[
  			INSERT INTO t_board (articleNO, title, content,category, id) values(#{articleNO}, #{title}, #{content}, #{category}, #{id})
  		]]>
  	</insert>
  	
+ 	<!-- 글 확인 -->
  	<select id="viewArticle" resultMap="articleResult" parameterType="int">
  		<![CDATA[
  			SELECT * FROM t_board where articleNO = #{articleNO}
  		]]>
  	</select>
+ 	
+ 	<!-- 글 수정 -->
+ 	<update id="modArticle" parameterType="articleVO">
+ 		<![CDATA[
+ 			UPDATE t_board SET title=#{title}, category=#{category}, content=#{content} where articleNO = #{articleNO}
+ 		]]>
+ 	</update>
+ 	
+ 	<!-- 글 삭제 -->
+ 	<delete id="deleteArticle" parameterType="int">
+ 		<![CDATA[
+ 			DELETE FROM t_board WHERE articleNO=#{articleNO}
+ 		]]>
+ 	</delete>
  </mapper>

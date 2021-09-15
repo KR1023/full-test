@@ -32,4 +32,12 @@ public class BoardService {
 	public ArticleVO viewArticle(int articleNO) {
 		return boardDAO.viewArticle(articleNO);
 	}
+	
+	public void modArticle(ArticleVO article) {
+		boardDAO.modArticle(article);
+	}
+	
+	public void deleteArticle(int articleNO) {
+		boardDAO.deleteArticle(articleNO);
+	}
 }

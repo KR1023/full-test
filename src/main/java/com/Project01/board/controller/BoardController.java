@@ -76,14 +76,14 @@ public class BoardController {
 		System.out.println("수신 카테고리 : " + article.getCategory());
 	}
 	
-	// articleNO 수신.
+	// 단순 articleNO 수신.
 	@PostMapping("/api/board/sendArticleNO")
 	public void getArticleNO(@RequestBody String articleNO, HttpServletResponse response) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
-		String after = removeEqualSign(articleNO);
-		int articleNO2 = Integer.parseInt(after);
+		String before = removeEqualSign(articleNO);
+		int after = Integer.parseInt(before);
 		System.out.println("수신한 글 번호 : " + after);
-		this.articleNO = articleNO2;
+		this.articleNO = after;
 		System.out.println("this.articleNO : " + this.articleNO);
 	}
 	
@@ -93,6 +93,38 @@ public class BoardController {
 		articleVO = boardService.viewArticle(articleNO);
 		return articleVO;
 	}
+	
+	@PostMapping("/api/board/send-article")
+	public void snedArticle(@RequestBody ArticleVO article, HttpServletResponse response) {
+		response.setHeader("Access-Controll-Allow-Origin","*");
+		articleVO = article;
+		System.out.println("전송자 : " + article.getId());
+		System.out.println("수신한 articleNO : " + article.getArticleNO());
+	}
+	
+	@GetMapping("/api/board/get-article")
+	@ResponseBody
+	public ArticleVO getArticle() {
+		ArticleVO article = articleVO;
+		articleVO = null;
+		return article;
+	}
+	
+	@PostMapping("/api/board/mod-article")
+	public void modArticle(@RequestBody ArticleVO article, HttpServletResponse response) {
+		response.setHeader("Access-Controll-Allow-Origin", "*");
+		boardService.modArticle(article);
+	}
+	
+	@PostMapping("/api/board/delete-article")
+	public void deleteArticle(@RequestBody String articleNO, HttpServletResponse response) {
+		String before = removeEqualSign(articleNO);
+		int after = Integer.parseInt(before);
+		response.setHeader("Access-Control-Allow-Origin","*");
+		boardService.deleteArticle(after);
+	}
+	
+	
 	private String changeKey(String session) {
 		String key = session.replace("%3A", ":").replace("=","");
 		System.out.println(key);
