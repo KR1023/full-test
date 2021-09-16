@@ -30,4 +30,11 @@
  		]]>
  	</select>
  	
+ 	<!-- ID 중복 확인 -->
+ 	<select id="checkId" parameterType="String" resultType="int">
+ 		<![CDATA[
+ 			SELECT COUNT(id) FROM t_member WHERE id=#{id};
+ 		]]>
+ 	</select>
+ 	
  </mapper>

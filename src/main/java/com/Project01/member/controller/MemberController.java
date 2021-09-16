@@ -104,9 +104,24 @@ public class MemberController {
 		memberService.addMember(vo);
 	}
 	
+	@PostMapping("/api/member/checkId")
+	@ResponseBody
+	public int checkIdDuplication(@RequestBody String id) {
+		String after = removeEqualSign(id);
+		System.out.println("중복 확인 ID : " + after);
+		int result = memberService.checkIdDuplication(after);
+		return result;
+	}
+	
+	
 	private String changeKey(String session) {
 		String key = session.replace("%3A", ":").replace("=","");
 		System.out.println(key);
 		return key;
+	}
+	
+	private String removeEqualSign(String before) {
+		String after = before.replace("=", "");
+		return after;
 	}
 }

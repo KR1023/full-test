@@ -28,4 +28,9 @@ public class MemberDAO {
 		return member;
 	}
 	
+	public int checkIdDuplication(String id) {
+		int result = sqlSession.selectOne("mapper.member.checkId",id);
+		return result;
+	}
+	
 }

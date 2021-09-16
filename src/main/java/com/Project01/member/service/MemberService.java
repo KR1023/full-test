@@ -29,4 +29,9 @@ public class MemberService {
 			MemberVO member = memberDAO.memberLogin(vo);
 			return member;
 		}
+		
+		public int checkIdDuplication(String id) {
+			int result = memberDAO.checkIdDuplication(id);
+			return result;
+		}
 }
