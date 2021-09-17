@@ -34,4 +34,13 @@ public class MemberService {
 			int result = memberDAO.checkIdDuplication(id);
 			return result;
 		}
+		
+		public MemberVO getMemberInfo(String id) {
+			MemberVO member = memberDAO.getMemberInfo(id);
+			return member;
+		}
+		
+		public void modMember(MemberVO member) {
+			memberDAO.modMember(member);
+		}
 }

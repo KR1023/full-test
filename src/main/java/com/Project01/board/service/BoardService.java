@@ -40,4 +40,12 @@ public class BoardService {
 	public void deleteArticle(int articleNO) {
 		boardDAO.deleteArticle(articleNO);
 	}
+	
+	public List searchTitle(String keyword,String id) {
+		return boardDAO.searchTitle(keyword, id);
+	}
+	
+	public List searchCategory(String keyword,String id) {
+		return boardDAO.searchCategory(keyword, id);
+	}
 }

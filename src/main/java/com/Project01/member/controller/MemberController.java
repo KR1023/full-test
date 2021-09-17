@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +25,6 @@ public class MemberController {
 	
 	private String tempId = null;
 	private Map<String, String> memberId = new HashMap<String, String>();
-	
 	
 	
 	@Autowired
@@ -77,16 +77,6 @@ public class MemberController {
 		
 	}
 	
-//	@GetMapping("/api/getId")
-//	@ResponseBody
-//	public String getId() {
-//		String id = tempId;
-//		String id2 = temp.getId();
-//		System.out.println("temp로 ID 받기 : " + id2);
-//		tempId = null;
-//		return id;
-//	}
-	
 	
 	@PostMapping("/api/logout")
 	@ResponseBody
@@ -108,9 +98,30 @@ public class MemberController {
 	@ResponseBody
 	public int checkIdDuplication(@RequestBody String id) {
 		String after = removeEqualSign(id);
-		System.out.println("중복 확인 ID : " + after);
 		int result = memberService.checkIdDuplication(after);
 		return result;
+	}
+	
+	@PostMapping("/api/member/get-member")
+	public void getMember(@RequestBody String sess, HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		String key = changeKey(sess);
+		System.out.println("수신 세션 키 : " + key);
+		tempId = temp.getSessionId(key);
+		System.out.println("아이디 수정 : " + tempId);
+	}
+	
+	@GetMapping("/api/member/get-info")
+	@ResponseBody
+	public MemberVO getInfo() {
+		MemberVO member = memberService.getMemberInfo(tempId);
+		return member;
+	}
+	
+	@PutMapping("/api/member/mod-member")
+	public void modMember(@RequestBody MemberVO member, HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		memberService.modMember(member);
 	}
 	
 	

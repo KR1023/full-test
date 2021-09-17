@@ -33,4 +33,13 @@ public class MemberDAO {
 		return result;
 	}
 	
+	public MemberVO getMemberInfo(String id) {
+		MemberVO member = sqlSession.selectOne("mapper.member.memberInfo",id);
+		return member;
+	}
+	
+	public void modMember(MemberVO member) {
+		int result = sqlSession.update("mapper.member.modMember",member);
+	}
+	
 }

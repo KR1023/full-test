@@ -69,4 +69,19 @@
  			DELETE FROM t_board WHERE articleNO=#{articleNO}
  		]]>
  	</delete>
+ 	
+ 	<select id="searchTitle" parameterType="java.util.HashMap" resultMap="articleResult">
+ 		<![CDATA[
+ 			SELECT * FROM t_board 
+ 			WHERE id=#{id} and title like CONCAT('%',#{title},'%')
+ 			ORDER BY writeDate DESC
+ 		]]>
+ 	</select>
+ 	
+ 	<select id="searchCategory" parameterType="java.util.HashMap" resultMap="articleResult">
+ 		<![CDATA[
+ 			SELECT * FROM t_board 
+ 			WHERE id=#{id} and category=#{category}
+ 		]]>	
+ 	</select>
  </mapper>

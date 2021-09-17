@@ -1,6 +1,8 @@
 package com.Project01.board.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +47,21 @@ public class BoardDAO {
 	
 	public void deleteArticle(int articleNO) {
 		int result = sqlSession.delete("mapper.board.deleteArticle",articleNO);
+	}
+	
+	public List<ArticleVO> searchTitle(String keyword, String id) {
+		Map<String, String> condition = new HashMap<String,String>();
+		condition.put("title", keyword);
+		condition.put("id", id);
+		List<ArticleVO> articles = sqlSession.selectList("mapper.board.searchTitle",condition);
+		return articles;
+	}
+	
+	public List<ArticleVO> searchCategory(String keyword, String id) {
+		Map<String, String> condition = new HashMap<String,String>();
+		condition.put("category", keyword);
+		condition.put("id", id);
+		List<ArticleVO> articles = sqlSession.selectList("mapper.board.searchCategory",condition);
+		return articles;
 	}
 }

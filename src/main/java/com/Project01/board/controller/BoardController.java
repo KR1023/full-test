@@ -3,6 +3,7 @@ package com.Project01.board.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Project01.Temp;
 import com.Project01.board.service.BoardService;
 import com.Project01.board.vo.ArticleVO;
 import com.Project01.board.vo.CategoryVO;
+import com.Project01.board.vo.SearchVO;
 
 @Controller
 public class BoardController {
@@ -26,16 +30,16 @@ public class BoardController {
 	private BoardService boardService;
 	@Autowired
 	private ArticleVO articleVO;
-	
 	private int articleNO = 0;
+	private String tempId = null;
 	
 	@PostMapping("/api/board/getId")
 	@ResponseBody
 	public String getId(@RequestBody String session) {
 		String key= changeKey(session);
 		String id = temp.getSessionId(key);
+		tempId = id;
 		System.out.println("api/board/getId의 ID: " + id);
-		temp.initId();
 		return id;
 	}
 	
@@ -56,8 +60,7 @@ public class BoardController {
 	@PostMapping("/api/listArticles")
 	@ResponseBody
 	public List listArticles(@RequestBody String id) {
-		int index = id.lastIndexOf("=");
-		id = id.substring(0,index);
+		id = id.replace("=","");
 		System.out.println("받아오는 ID : " + id);
 		List<ArticleVO> articles = new ArrayList();
 		articles = boardService.listArticles(id);
@@ -124,6 +127,27 @@ public class BoardController {
 		boardService.deleteArticle(after);
 	}
 	
+	@RequestMapping(value="/api/board/search-title",method=RequestMethod.POST)
+	@ResponseBody
+	public List searchTitle(@RequestBody SearchVO keyword, HttpServletResponse response) throws Exception {
+		String id = tempId;
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		System.out.println(keyword.getKeyword());
+		List<ArticleVO> articles = new ArrayList<ArticleVO>();
+		articles = boardService.searchTitle(keyword.getKeyword(),id);
+		return articles;
+	}
+	
+	@PostMapping("/api/board/search-category")
+	@ResponseBody
+	public List searchCategory(@RequestBody SearchVO keyword, HttpServletRequest request,HttpServletResponse response) throws Exception {
+		String id = tempId;
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		System.out.println("수신 카테고리 : "+ keyword.getKeyword());
+		List<ArticleVO> articles = new ArrayList<ArticleVO>();
+		articles = boardService.searchCategory(keyword.getKeyword(),id);
+		return articles;
+	}
 	
 	private String changeKey(String session) {
 		String key = session.replace("%3A", ":").replace("=","");
