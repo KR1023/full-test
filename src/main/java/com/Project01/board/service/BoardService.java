@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.Project01.board.dao.BoardDAO;
 import com.Project01.board.vo.ArticleVO;
+import com.Project01.board.vo.CategoryVO;
 
 @Service("boardService")
 public class BoardService {
@@ -47,5 +48,9 @@ public class BoardService {
 	
 	public List searchCategory(String keyword,String id) {
 		return boardDAO.searchCategory(keyword, id);
+	}
+	
+	public void addCategory(CategoryVO category) {
+		boardDAO.addCategory(category);
 	}
 }

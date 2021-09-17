@@ -11,6 +11,7 @@
  		<result property ="category" column="category" />
  		<result property="writeDate" column="writeDate" />
  	</resultMap>
+ 	
  	<resultMap id="categoryResult" type="categoryVO">
  		<result property="name" column="name"/>
  		<result property="id"  column="id"/>
@@ -84,4 +85,9 @@
  			WHERE id=#{id} and category=#{category}
  		]]>	
  	</select>
+ 	
+ 	<!-- 카테고리 추가 -->
+ 	<insert id="addCategory" parameterType="CategoryVO">
+ 		INSERT INTO t_category (name, id) VALUES(#{name}, #{id})
+ 	</insert>
  </mapper>

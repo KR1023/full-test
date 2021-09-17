@@ -149,6 +149,12 @@ public class BoardController {
 		return articles;
 	}
 	
+	@PostMapping("/api/board/add-category")
+	public void addCategory(@RequestBody CategoryVO category, HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin","*");
+		boardService.addCategory(category);
+	}
+	
 	private String changeKey(String session) {
 		String key = session.replace("%3A", ":").replace("=","");
 		System.out.println(key);

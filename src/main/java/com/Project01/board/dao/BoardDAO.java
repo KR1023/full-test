@@ -64,4 +64,8 @@ public class BoardDAO {
 		List<ArticleVO> articles = sqlSession.selectList("mapper.board.searchCategory",condition);
 		return articles;
 	}
+	
+	public void addCategory(CategoryVO category) {
+		int result = sqlSession.insert("mapper.board.addCategory",category);
+	}
 }
