@@ -18,11 +18,13 @@
  		]]>
  	</select>
  	
+ 	<!-- 회원 추가 -->
  	<insert id="insertMember" parameterType="memberVO">
  		INSERT INTO t_member (id, pwd, name, email) 
  		VALUES(#{id}, sha2(#{pwd},256), #{name}, #{email}) 
  	</insert>
  	
+ 	<!-- 로그인  -->
  	<select id="loginMember" parameterType="memberVO" resultType="MemberVO">
  		<![CDATA[
  			SELECT * FROM t_member
@@ -44,11 +46,18 @@
  		]]>
  	</select>
  	
- 	<!-- 멤버 수정 -->
+ 	<!-- 회원 정보 수정 -->
  	<update id="modMember" parameterType="MemberVO">
  		<![CDATA[
  			UPDATE t_member SET pwd=sha2(#{pwd},256), name=#{name}, email=#{email} WHERE id=#{id} 
  		]]>
  	</update>
+ 	
+ 	<!-- 회원 탈퇴 -->
+ 	<delete id="deleteMember" parameterType="String">
+ 		<![CDATA[
+ 			DELETE FROM t_member WHERE id=#{id}
+ 		]]>
+ 	</delete>
  	
  </mapper>

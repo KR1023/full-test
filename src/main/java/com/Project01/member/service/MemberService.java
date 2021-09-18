@@ -43,4 +43,8 @@ public class MemberService {
 		public void modMember(MemberVO member) {
 			memberDAO.modMember(member);
 		}
+		
+		public void deleteMember(String id) {
+			memberDAO.deleteMember(id);
+		}
 }

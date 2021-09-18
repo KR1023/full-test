@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -124,6 +125,13 @@ public class MemberController {
 		memberService.modMember(member);
 	}
 	
+	@PostMapping("/api/member/delete-member")
+	public void deleteMember(@RequestBody String id, HttpServletResponse response) {
+		id = removeEqualSign(id);
+		System.out.println("삭제 아이디 : " + id);
+		response.setHeader("Access-Controll-Allow-Origin","*");
+		memberService.deleteMember(id);
+	}
 	
 	private String changeKey(String session) {
 		String key = session.replace("%3A", ":").replace("=","");

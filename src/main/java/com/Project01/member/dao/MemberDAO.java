@@ -42,4 +42,8 @@ public class MemberDAO {
 		int result = sqlSession.update("mapper.member.modMember",member);
 	}
 	
+	public void deleteMember(String id) {
+		int result = sqlSession.delete("mapper.member.deleteMember",id);
+	}
+	
 }
