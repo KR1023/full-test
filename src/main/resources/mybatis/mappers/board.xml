@@ -90,4 +90,11 @@
  	<insert id="addCategory" parameterType="CategoryVO">
  		INSERT INTO t_category (name, id) VALUES(#{name}, #{id})
  	</insert>
+ 	
+ 	<!-- 카테고리 삭제 -->
+ 	<delete id="deleteCategory" parameterType="CategoryVO">
+ 		<![CDATA[
+ 			DELETE FROM t_category WHERE name=#{name} and id=#{id}
+ 		]]>
+ 	</delete>
  </mapper>

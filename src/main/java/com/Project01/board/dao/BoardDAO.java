@@ -68,4 +68,8 @@ public class BoardDAO {
 	public void addCategory(CategoryVO category) {
 		int result = sqlSession.insert("mapper.board.addCategory",category);
 	}
+	
+	public void deleteCategory(CategoryVO category) {
+		int result = sqlSession.delete("mapper.board.deleteCategory",category);
+	}
 }

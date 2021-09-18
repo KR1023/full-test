@@ -53,4 +53,8 @@ public class BoardService {
 	public void addCategory(CategoryVO category) {
 		boardDAO.addCategory(category);
 	}
+	
+	public void deleteCategory(CategoryVO category) {
+		boardDAO.deleteCategory(category);
+	}
 }

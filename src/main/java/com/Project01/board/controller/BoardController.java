@@ -155,6 +155,11 @@ public class BoardController {
 		boardService.addCategory(category);
 	}
 	
+	@PostMapping("/api/board/delete-category")
+	public void deleteCategory(@RequestBody CategoryVO category, HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		boardService.deleteCategory(category);
+	}
 	private String changeKey(String session) {
 		String key = session.replace("%3A", ":").replace("=","");
 		System.out.println(key);
