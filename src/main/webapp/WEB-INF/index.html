@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><title>Simple Web Note</title><script>function noEvent() { // 새로 고침 방지
+            if (event.keyCode == 116) {
+                alert("새로고침은 금지되어 있습니다.");
+                return false;
+            } else if (event.ctrlKey
+                    && (event.keyCode == 78 || event.keyCode == 82)) {
+                return false;
+            } else if(event.keycode == 8){
+                alert("뒤로 가기 버튼은 금지되어 있습니다. ");
+                return false;
+            }
+        }
+        document.onkeydown = noEvent;
+
+        // 우측 마우스 버튼 클릭 금지
+        document.oncontextmenu = function(){
+            alert("오른쪽 마우스 버튼은 금지되어 있습니다.");
+            return false;
+        }</script><style>body{
+            background-color:#f9f9f9dc;
+            font-family: 'Noto Sans KR', sans-serif;
+            padding:0;
+            margin:0;
+        }
+
+        ul{
+            list-style:none;
+            text-decoration:none;
+            margin:0;
+            padding:0;
+            text-align:start;
+        }</style><link href="/css/app.6709860e.css" rel="preload" as="style"><link href="/js/app.803cb301.js" rel="preload" as="script"><link href="/js/chunk-vendors.c8a1f62a.js" rel="preload" as="script"><link href="/css/app.6709860e.css" rel="stylesheet"></head><body><div id="app"></div><script src="/js/chunk-vendors.c8a1f62a.js"></script><script src="/js/app.803cb301.js"></script></body></html>

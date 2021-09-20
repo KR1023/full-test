@@ -21,6 +21,7 @@ public class MemberDAO {
 	
 	public void addMember(MemberVO vo) {
 		int result = sqlSession.insert("mapper.member.insertMember",vo);
+		int result2 = sqlSession.insert("mapper.member.firstArticle",vo.getId());
 	}
 	
 	public MemberVO memberLogin(MemberVO vo) {

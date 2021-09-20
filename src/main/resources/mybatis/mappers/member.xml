@@ -24,6 +24,16 @@
  		VALUES(#{id}, sha2(#{pwd},256), #{name}, #{email}) 
  	</insert>
  	
+ 	<!-- 회원가입 시 자동 생성되는 첫 번째 글 -->
+ 	<insert id="firstArticle" parameterType="String">
+ 		<![CDATA[
+ 			INSERT INTO t_board (articleNO, title, content, category, id) values ((SELECT MAX(articleNO)+1 FROM t_board b), '첫 번째 글', 
+ 			'환영합니다. 이 사이트는 웹을 통해 단순한 메모를 작성하기 위한 곳입니다. 글 작성 전 카테고리를 추가하여 범주를 만들고 글 작성 시 글을 분류할 수 있습니다. 
+작성한 글은 로그인한 사용자 자신만 확인할 수 있습니다. 회원가입 시 입력한 비밀번호는 암호화되어 데이터베이스에 저장되어 있습니다.
+해당 사이트를 이용해 주셔서 감사합니다.','안내',#{id})
+ 		]]>
+ 	</insert>
+ 	
  	<!-- 로그인  -->
  	<select id="loginMember" parameterType="memberVO" resultType="MemberVO">
  		<![CDATA[

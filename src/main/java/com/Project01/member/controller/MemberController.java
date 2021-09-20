@@ -34,7 +34,7 @@ public class MemberController {
 //	@Autowired
 //	MemberVO memberVO;
 	
-	// 필수임..
+	// 필수
 	@RequestMapping("/home")
 	public String main() {
 		return "index";
@@ -44,13 +44,13 @@ public class MemberController {
 	@ResponseBody
 	public int login(@RequestBody MemberVO vo) {
 		int result = 0;
-		System.out.println("로그인 아이디  :" + vo.getId());
-		System.out.println("로그인 비밀번호 : " + vo.getPwd());
+		System.out.println("Login ID  :" + vo.getId());
+		System.out.println("Login Pwd : " + vo.getPwd());
 		MemberVO member = memberService.login(vo);
 		if(member != null) {
 			tempId = member.getId();
 			temp.setId(tempId);
-			System.out.println("temp에 ID 저장");
+			System.out.println("Saved Id in temp...");
 			memberId.put(tempId, tempId);
 			System.out.println("size: " + memberId.size());
 			result = 1;
@@ -74,7 +74,7 @@ public class MemberController {
 		
 		temp.addUser(memberId, key);
 		System.out.println("Key : " + key +", Value : " + tempId);
-		System.out.println("로그인 유저 추가 : " + tempId);
+		System.out.println("user added : " + tempId);
 		
 	}
 	
@@ -107,9 +107,9 @@ public class MemberController {
 	public void getMember(@RequestBody String sess, HttpServletResponse response) {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		String key = changeKey(sess);
-		System.out.println("수신 세션 키 : " + key);
+		System.out.println("received key : " + key);
 		tempId = temp.getSessionId(key);
-		System.out.println("아이디 수정 : " + tempId);
+		System.out.println("modifying : " + tempId);
 	}
 	
 	@GetMapping("/api/member/get-info")
@@ -128,7 +128,7 @@ public class MemberController {
 	@PostMapping("/api/member/delete-member")
 	public void deleteMember(@RequestBody String id, HttpServletResponse response) {
 		id = removeEqualSign(id);
-		System.out.println("삭제 아이디 : " + id);
+		System.out.println("deleted : " + id);
 		response.setHeader("Access-Controll-Allow-Origin","*");
 		memberService.deleteMember(id);
 	}

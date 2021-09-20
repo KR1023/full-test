@@ -50,9 +50,6 @@ public class BoardController {
 		String key = changeKey(session);
 		String id = temp.getSessionId(key);
 		category = boardService.getCategory(id);
-		for(int i = 0; i<category.size();i++) {
-			System.out.println("catList의 "+i+"번째 내용 : " + category.get(i));
-		}
 		
 		return category;
 	}
@@ -61,7 +58,7 @@ public class BoardController {
 	@ResponseBody
 	public List listArticles(@RequestBody String id) {
 		id = id.replace("=","");
-		System.out.println("받아오는 ID : " + id);
+		System.out.println("received Id : " + id);
 		List<ArticleVO> articles = new ArrayList();
 		articles = boardService.listArticles(id);
 		return articles;
@@ -73,10 +70,6 @@ public class BoardController {
 		int articleNO = boardService.getArticleNO();
 		article.setArticleNO(articleNO);
 		boardService.addArticle(article);
-		System.out.println("수신 ID : " + article.getId());
-		System.out.println("수신 제목 : " + article.getTitle());
-		System.out.println("수신 내용 : " + article.getContent());
-		System.out.println("수신 카테고리 : " + article.getCategory());
 	}
 	
 	// 단순 articleNO 수신.
@@ -85,7 +78,6 @@ public class BoardController {
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		String before = removeEqualSign(articleNO);
 		int after = Integer.parseInt(before);
-		System.out.println("수신한 글 번호 : " + after);
 		this.articleNO = after;
 		System.out.println("this.articleNO : " + this.articleNO);
 	}
@@ -101,8 +93,8 @@ public class BoardController {
 	public void snedArticle(@RequestBody ArticleVO article, HttpServletResponse response) {
 		response.setHeader("Access-Controll-Allow-Origin","*");
 		articleVO = article;
-		System.out.println("전송자 : " + article.getId());
-		System.out.println("수신한 articleNO : " + article.getArticleNO());
+		System.out.println("sender : " + article.getId());
+		System.out.println("received articleNO : " + article.getArticleNO());
 	}
 	
 	@GetMapping("/api/board/get-article")
